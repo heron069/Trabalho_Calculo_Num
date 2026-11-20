@@ -1,3 +1,6 @@
+package com.calculo.trabV1.geral;
+
+
 public class NoOperador implements No{
     private String operador;
     private No esq;

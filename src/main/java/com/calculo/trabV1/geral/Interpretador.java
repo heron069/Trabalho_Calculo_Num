@@ -1,3 +1,5 @@
+package com.calculo.trabV1.geral;
+
 public class Interpretador {
     private No arvore;
     private No arvoreDerivada;

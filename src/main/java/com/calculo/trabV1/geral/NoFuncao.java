@@ -1,3 +1,5 @@
+package com.calculo.trabV1.geral;
+
 
 public class NoFuncao implements No{
     private String funcao;

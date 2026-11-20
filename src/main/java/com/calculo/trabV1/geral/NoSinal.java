@@ -1,3 +1,6 @@
+package com.calculo.trabV1.geral;
+
+
 public class NoSinal implements No{
     private String sinal;
     private No argumento;

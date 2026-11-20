@@ -1,3 +1,6 @@
+package com.calculo.trabV1.geral;
+
+
 public class NoVariavel implements No{
     @Override 
     public double interpretar(double x){
