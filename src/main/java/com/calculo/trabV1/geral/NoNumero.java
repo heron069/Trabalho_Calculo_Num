@@ -1,3 +1,6 @@
+package com.calculo.trabV1.geral;
+
+
 public class NoNumero implements No{
     private double valor;
 

@@ -1,3 +1,5 @@
+package com.calculo.trabV1.geral;
+
 public class Montador{
     private String expressao;
     private int pos = 0;
