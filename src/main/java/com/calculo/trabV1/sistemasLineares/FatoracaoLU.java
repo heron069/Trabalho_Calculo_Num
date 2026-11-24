@@ -1,6 +1,6 @@
 package com.calculo.trabV1.sistemasLineares;
 
-public class LU {
+public class FatoracaoLU {
 
     public static class ResultadoLU {
         private final double[][] l;
