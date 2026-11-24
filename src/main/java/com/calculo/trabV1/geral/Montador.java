@@ -78,7 +78,7 @@ public class Montador{
         while(charAtual == '^'){
             char operador = charAtual;
             avancar();
-            No valorDireita = montarExpo();
+            No valorDireita = montarSinal();
             no = new NoOperador(String.valueOf(operador), no, valorDireita);
         }
         return no;
@@ -103,17 +103,15 @@ public class Montador{
                 avancar();
             }
 
-            double valorFinal;
-
             try{
-                valorFinal = Double.parseDouble(sb.toString().replace(',', '.'));
+                double valorFinal = Double.parseDouble(sb.toString().replace(',', '.'));
+                return new NoNumero(valorFinal);
             }
             catch(NumberFormatException e){
                 throw new ExpressaoInvalidaException("Número inválido na expressão: " + sb);
             }
         }
 
-        
         if(Character.isLetter(charAtual)){
             StringBuilder sb = new StringBuilder();
             while (Character.isLetter(charAtual)){
@@ -145,6 +143,7 @@ public class Montador{
             }
             throw new FuncaoInvalidaException("Funcao ou constante desconhecida: " + op);
         }
+
         throw new CharInvalidoException("Caractere invalido encontrado: " + charAtual);
     }
 
