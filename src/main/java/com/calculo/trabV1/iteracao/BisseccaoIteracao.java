@@ -1,5 +1,6 @@
 package com.calculo.trabV1.iteracao;
 
+
 public class BisseccaoIteracao {
     private int num;
     private double x;

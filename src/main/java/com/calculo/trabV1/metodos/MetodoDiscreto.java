@@ -1,10 +1,12 @@
 package com.calculo.trabV1.metodos;
-
+import com.calculo.trabV1.excecoes.*;
 import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.resultados.ResultadoDiscreto;
+import com.calculo.trabV1.sistemasLineares.EliminacaoGauss;
 
 public class MetodoDiscreto {
     private Interpretador interpretador;
+    private EliminacaoGauss gauss = new EliminacaoGauss();
     private double[] x;
     private double[] y;
     private int grau;
@@ -46,19 +48,34 @@ public class MetodoDiscreto {
             b[i] = soma;
         }
 
+        double[][] aumentada = new double[tam][tam+1];
+        for(int i = 0; i < tam; i++){
+            for(int j = 0; j<tam+1; j++){
+                if(j == tam){
+                    aumentada[i][j] = b[i];
+                }
+                else{
+                    aumentada[i][j] = A[i][j];
+                }
+            }
+        }
+
+        ResultadoGauss solucao = gauss.eliminacaoDeGauss(aumentada);
         double[] alpha = new double[tam];
-        // Encontra uma forma de resolver o sistema A * alpha = b 
-        // usando a classe de Eliminação de Gauss Da Erika.
+        alpha = solucao.getSolucao();
+
 
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < alpha.length; i++){
+        for (int i = 0; i < alpha.length; i++) {
             double c = alpha[i];
-            if(i > 0){
+            String valorAbs = java.math.BigDecimal.valueOf(Math.abs(c)).toPlainString();
+
+            if (i > 0) {
                 sb.append(c >= 0 ? " + " : " - ");
-                sb.append(Math.abs(c)).append("*x^").append(i);
-            }
-            else{
-                sb.append(c).append("*x^").append(i);
+                sb.append(valorAbs).append("*x^").append(i);
+            } else {
+                if (c < 0) sb.append("-");
+                sb.append(valorAbs).append("*x^").append(i);
             }
         }
         
