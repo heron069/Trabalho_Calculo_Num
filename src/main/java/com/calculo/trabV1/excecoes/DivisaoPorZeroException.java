@@ -1,6 +1,6 @@
 package excecoes;
 
-public class DivisaoPorZeroException extends ArithmeticException {
+public class DivisaoPorZeroException extends ArithmeticException{
     public DivisaoPorZeroException(){
         super("Divisao por zero!");
     }

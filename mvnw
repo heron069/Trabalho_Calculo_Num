@@ -167,7 +167,7 @@ CLASSWORLDS_LAUNCHER=org.codehaus.plexus.classworlds.launcher.Launcher
 
 # traverses directory structure from process work directory to filesystem root
 # first directory with .mvn subdirectory is considered project base directory
-find_maven_basedir() {
+find_maven_basedir(){
 
   if [ -z "$1" ]
   then
@@ -192,7 +192,7 @@ find_maven_basedir() {
 }
 
 # concatenates all lines of a file
-concat_lines() {
+concat_lines(){
   if [ -f "$1" ]; then
     echo "$(tr -s '\n' ' ' < "$1")"
   fi

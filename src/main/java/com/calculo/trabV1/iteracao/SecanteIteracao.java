@@ -1,6 +1,6 @@
 package com.calculo.trabV1.iteracao;
 
-public class SecanteIteracao {
+public class SecanteIteracao{
     private int num;
     private double x;
     private double x1;

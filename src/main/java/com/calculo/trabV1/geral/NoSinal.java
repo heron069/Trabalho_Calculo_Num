@@ -29,11 +29,11 @@ public class NoSinal implements No{
         return new NoSinal(sinal,argumento.derivar());
     }
 
-    public String getSinal() {
+    public String getSinal(){
         return sinal;
     }
 
-    public No getArgumento() {
+    public No getArgumento(){
         return argumento;
     }
 

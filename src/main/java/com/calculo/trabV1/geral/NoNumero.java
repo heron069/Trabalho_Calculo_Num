@@ -19,8 +19,8 @@ public class NoNumero implements No{
     }
 
     @Override 
-    public String toString() {
-        if (valor == (int) valor) {
+    public String toString(){
+        if(valor == (int) valor){
             return String.valueOf((int) valor);
         }
         return String.valueOf(valor);

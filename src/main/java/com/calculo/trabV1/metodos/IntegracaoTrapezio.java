@@ -3,7 +3,7 @@ import com.calculo.trabV1.excecoes.*;
 import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.resultados.ResultadoIntegracao;
 
-public class IntegracaoTrapezio {
+public class IntegracaoTrapezio{
     private Interpretador interpretador;
     private double resultado;
     private double minIntervalo;
@@ -12,8 +12,11 @@ public class IntegracaoTrapezio {
     private int n;
 
     public IntegracaoTrapezio(Interpretador interpretador, double minIntervalo, double maxIntervalo, int n){
-        if(maxIntervalo < minIntervalo){
-            throw new RuntimeException("Intervalo Invalido");
+        if (maxIntervalo < minIntervalo) {
+            throw new ArgumentoInvalidoException("O limite máximo deve ser maior que o mínimo.");
+        }
+        if (n <= 0) {
+            throw new ArgumentoInvalidoException("O número de subintervalos deve ser maior que zero.");
         }
         
         this.interpretador = interpretador;

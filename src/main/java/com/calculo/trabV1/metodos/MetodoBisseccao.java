@@ -52,7 +52,7 @@ public class MetodoBisseccao{
         while(erro > tolerancia && i < maxIteracao){
             x =(minIntervalo + maxIntervalo)/2.0;
             fx = interpretador.calcular(x);
-            if (!Double.isFinite(fx)) {
+            if(!Double.isFinite(fx)){
                 throw new DominioMatematicoException("A função retornou um valor inválido durante a bissecção.");
             }
             erro = Math.abs(maxIntervalo - minIntervalo)/2.0;

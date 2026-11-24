@@ -13,7 +13,7 @@ public class NoFuncao implements No{
     @Override
     public double interpretar(double x){
         double valor = argumento.interpretar(x);
-        if (!Double.isFinite(valor)) {
+        if(!Double.isFinite(valor)){
             throw new DominioMatematicoException("O argumento da função não é um número finito.");
         }
     
@@ -25,42 +25,42 @@ public class NoFuncao implements No{
                 return Math.cos(valor);
 
             case "tg":
-                if (Math.abs(Math.cos(valor)) < 1e-12) {
+                if(Math.abs(Math.cos(valor)) < 1e-12){
                     throw new DominioMatematicoException("tg(x) indefinida nesse ponto!");
                 }
                 return Math.tan(valor);
 
             case "log":
-                if (valor <= 0) {
+                if(valor <= 0){
                     throw new DominioMatematicoException("log(x) exige um argumento maior que zero!");
                 }
                 return Math.log10(valor);
         
             case "sqrt":
-                if (valor < 0) {
+                if(valor < 0){
                     throw new DominioMatematicoException("sqrt(x) exige um argumento maior ou igual a zero!");
                 }
                 return Math.sqrt(valor);
 
             case "ln":
-                 if (valor <= 0) {
+                 if(valor <= 0){
                     throw new DominioMatematicoException("ln(x) exige um argumento maior que zero!");
                 }
                 return Math.log(valor);
             case "sec":
-                if (Math.abs(Math.cos(valor)) < 1e-12) {
+                if(Math.abs(Math.cos(valor)) < 1e-12){
                     throw new DominioMatematicoException("sec(x) indefinida nesse ponto!");
                 }
                 return 1.0/(Math.cos(valor));
 
             case "cossec":
-                if (Math.abs(Math.sin(valor)) < 1e-12) {
+                if(Math.abs(Math.sin(valor)) < 1e-12){
                     throw new DominioMatematicoException("cossec(x) indefinida nesse ponto!");
                 }
                 return 1.0/(Math.sin(valor));
 
             case "cotg":
-                if (Math.abs(Math.sin(valor)) < 1e-12) {
+                if(Math.abs(Math.sin(valor)) < 1e-12){
                     throw new DominioMatematicoException("cotg(x) indefinida nesse ponto!");
                 }
                 return Math.cos(valor)/(Math.sin(valor));
@@ -72,7 +72,7 @@ public class NoFuncao implements No{
 
     @Override 
     public No derivar(){
-        switch (funcao) {
+        switch (funcao){
             case "sin":
                 return new NoOperador("*",
                                      new NoFuncao("cos",argumento),
@@ -143,11 +143,11 @@ public class NoFuncao implements No{
         }
     }
 
-    public String getFuncao() {
+    public String getFuncao(){
     return funcao;
 }
 
-public No getArgumento() {
+public No getArgumento(){
     return argumento;
 }
 

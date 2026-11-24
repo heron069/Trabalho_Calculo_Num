@@ -1,7 +1,7 @@
 package com.calculo.trabV1.iteracao;
 
 
-public class BisseccaoIteracao {
+public class BisseccaoIteracao{
     private int num;
     private double x;
     private double fx;

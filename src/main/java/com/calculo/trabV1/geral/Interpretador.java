@@ -2,7 +2,7 @@ package com.calculo.trabV1.geral;
 
 import com.calculo.trabV1.excecoes.*;
 
-public class Interpretador {
+public class Interpretador{
     private No arvore;
     private No arvoreDerivada;
 
@@ -12,23 +12,23 @@ public class Interpretador {
         this.arvoreDerivada = arvore.derivar();
     }
 
-    public double calcular(double x) {
-        if (!Double.isFinite(x)) {
+    public double calcular(double x){
+        if(!Double.isFinite(x)){
             throw new ArgumentoInvalidoException("O valor de x deve ser finito.");
         }
         return arvore.interpretar(x);
     }
-    public double calcularDerivada(double x) {
-        if (!Double.isFinite(x)) {
+    public double calcularDerivada(double x){
+        if(!Double.isFinite(x)){
             throw new ArgumentoInvalidoException("O valor de x deve ser finito.");
         }
         return arvoreDerivada.interpretar(x);
     }
 
-    public String getFuncaoFormatada() {
+    public String getFuncaoFormatada(){
         return arvore.toString();
     }
-    public String getFuncaoDerivadaFormatada() {
+    public String getFuncaoDerivadaFormatada(){
         return arvoreDerivada.toString();
     }
     public No getArvore(){

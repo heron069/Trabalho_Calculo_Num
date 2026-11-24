@@ -7,7 +7,7 @@ import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.iteracao.SecanteIteracao;
 import com.calculo.trabV1.resultados.ResultadoMetodo;
 
-public class MetodoSecante {
+public class MetodoSecante{
     private Interpretador interpretador;
 
     public MetodoSecante(Interpretador interpretador){
@@ -43,17 +43,20 @@ public class MetodoSecante {
         while(!convergiu && num < it){
             num++;
             
-            if (Math.abs(fx1 - fx) < 1e-12) {
-                System.out.println("Divisão por zero Encontrada!!! Verifique Valores");
-                break;
+            if(Math.abs(fx1 - fx) < 1e-12){
+                throw new DivisaoPorZeroException("f(x1) - f(x0) é zero ou muito próximo de zero.");
             }
 
             double x2 = x1 - (fx1*(x1-x))/(fx1 - fx);
             double fx2 = interpretador.calcular(x2);
-            
-            raiz = x2;
-            
-            iteracoes.add(new SecanteIteracao(num, x, fx, x1, fx1, x2, fx2));
+            double erro = Math.abs(x2 - x1);
+
+            if(!Double.isFinite(x2) || !Double.isFinite(fx2)){
+                throw new DivisaoPorZeroException("O método da secante gerou um valor inválido.");
+            }
+            raiz = x2;            
+
+            iteracoes.add(new SecanteIteracao(num, x, fx, x1, fx1, x2, erro));
 
             convergiu = Math.abs(fx2) <= tolerancia || Math.abs(x2 - x1) <= tolerancia;
             
@@ -61,7 +64,6 @@ public class MetodoSecante {
             fx = fx1;
             x1 = x2;
             fx1 = fx2;
-
         }
 
         return new ResultadoMetodo<>(raiz, convergiu, iteracoes);

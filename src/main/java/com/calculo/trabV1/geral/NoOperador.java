@@ -18,12 +18,12 @@ public class NoOperador implements No{
         double valorEsquerda = esq.interpretar(x);
         double valorDireita = dir.interpretar(x);
 
-        switch (operador) {
+        switch (operador){
             case "+": return valorEsquerda + valorDireita;
             case "-": return valorEsquerda - valorDireita;
             case "*": return valorEsquerda * valorDireita;
             case "/":
-                if (valorDireita == 0.0) {
+                if(valorDireita == 0.0){
                     throw new DivisaoPorZeroException();
                 }
                 return valorEsquerda / valorDireita;
@@ -82,7 +82,7 @@ public class NoOperador implements No{
                                         esq.derivar());
                 }
 
-                if (esq instanceof NoNumero) {
+                if(esq instanceof NoNumero){
                     return new NoOperador("*",
                         new NoOperador("^", esq, dir),
                         new NoOperador("*",
@@ -109,15 +109,15 @@ public class NoOperador implements No{
         }
     }
 
-    public String getOperador() {
+    public String getOperador(){
         return operador;
     }
 
-    public No getEsquerda() {
+    public No getEsquerda(){
         return esq;
     }
 
-    public No getDireita() {
+    public No getDireita(){
         return dir;
     }
 

@@ -1,6 +1,6 @@
 package excecoes;
 
-public class FuncaoInvalidaException extends RuntimeException {
+public class FuncaoInvalidaException extends RuntimeException{
     public FuncaoInvalidaException(){
         super("Funcao Invalida ou Desconhecida encontrada!");
     }

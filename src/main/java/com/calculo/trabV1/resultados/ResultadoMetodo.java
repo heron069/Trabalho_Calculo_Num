@@ -2,7 +2,7 @@ package com.calculo.trabV1.resultados;
 
 import java.util.List;
 
-public class ResultadoMetodo<T> {
+public class ResultadoMetodo<T>{
     private double raiz;
     private boolean convergiu;
     private int numIteracoes;
@@ -12,26 +12,26 @@ public class ResultadoMetodo<T> {
         double raiz,
         boolean convergiu,
         List<T> iteracoes
-    ) {
+    ){
         this.raiz = raiz;
         this.convergiu = convergiu;
         this.numIteracoes = iteracoes.size();
         this.iteracoes = iteracoes;
     }
 
-    public double getRaiz() {
+    public double getRaiz(){
         return raiz;
     }
 
-    public boolean isConvergiu() {
+    public boolean isConvergiu(){
         return convergiu;
     }
 
-    public int getTotalIteracoes() {
+    public int getTotalIteracoes(){
         return numIteracoes;
     }
 
-    public List<T> getIteracoes() {
+    public List<T> getIteracoes(){
         return iteracoes;
     }
 
@@ -39,7 +39,7 @@ public class ResultadoMetodo<T> {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
-        for(T it : iteracoes) {
+        for(T it : iteracoes){
         sb.append(it).append("\n");
         }
 

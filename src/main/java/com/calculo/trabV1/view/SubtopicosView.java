@@ -6,9 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class SubtopicosView extends VBox {
+public class SubtopicosView extends VBox{
 
-    public SubtopicosView(String letraTopico) {
+    public SubtopicosView(String letraTopico){
         setAlignment(Pos.CENTER);
         setSpacing(15);
         setPadding(new Insets(20));
@@ -19,7 +19,7 @@ public class SubtopicosView extends VBox {
         VBox boxBotoes = new VBox(10);
         boxBotoes.setAlignment(Pos.CENTER);
 
-        switch (letraTopico) {
+        switch (letraTopico){
             case "A":
                 lblTitulo.setText("A) Raízes de Funções");
                 adicionarSubtopico(boxBotoes, "1. Método da Bissecção");
@@ -53,7 +53,7 @@ public class SubtopicosView extends VBox {
         getChildren().addAll(lblTitulo, boxBotoes, btnVoltar);
     }
 
-    private void adicionarSubtopico(VBox container, String nomeSubtopico) {
+    private void adicionarSubtopico(VBox container, String nomeSubtopico){
         Button btn = new Button(nomeSubtopico);
         btn.setPrefWidth(400);
         btn.setOnAction(e -> MainApp.mudarTela(new MetodoInterfaceView(nomeSubtopico)));

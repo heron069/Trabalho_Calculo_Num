@@ -1,8 +1,8 @@
 package com.calculo.trabV1.resultados;
 
 import com.calculo.trabV1.geral.*;
-
-public class ResultadoDiscreto {
+import com.calculo.trabV1.excecoes.*;
+public class ResultadoDiscreto{
     private double[][] A;
     private double[] alpha;
     private double[] b;

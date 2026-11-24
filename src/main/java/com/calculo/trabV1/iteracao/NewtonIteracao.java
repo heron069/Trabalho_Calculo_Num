@@ -1,6 +1,6 @@
 package com.calculo.trabV1.iteracao;
 
-public class NewtonIteracao {
+public class NewtonIteracao{
     private int num;
     private double x0;
     private double x1;

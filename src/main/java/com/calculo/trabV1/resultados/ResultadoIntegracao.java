@@ -1,6 +1,6 @@
 package com.calculo.trabV1.resultados;
 
-public class ResultadoIntegracao {
+public class ResultadoIntegracao{
     private double valor;
 
     public ResultadoIntegracao(double valor){

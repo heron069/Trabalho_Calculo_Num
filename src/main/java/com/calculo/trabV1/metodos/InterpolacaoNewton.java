@@ -6,11 +6,15 @@ import com.calculo.trabV1.resultados.ResultadoInterpolacao;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InterpolacaoNewton {
+public class InterpolacaoNewton{
     private List<List<Double>> ordens = new ArrayList<>();
 
 
     public double montarD(double[] x, double [] y, int k){
+        if (k < 0 || k >= x.length) {
+            throw new ArgumentoInvalidoException("Ordem de diferença dividida inválida.");
+        }
+        
         if(ordens.isEmpty()){
             List<Double> ordem0 = new ArrayList<>();
             for(double i: y){
@@ -27,6 +31,10 @@ public class InterpolacaoNewton {
             for(int i = 0; i < ordemAnt.size()-1; i++){
                 double numerador = ordemAnt.get(i+1) - ordemAnt.get(i);
                 double denominador = x[i + ordemAtual] - x[i];
+                if (denominador == 0.0) {
+                    throw new DivisaoPorZeroException("Não é possível calcular com valores de x repetidos.");
+                }
+                
                 novaOrdem.add(numerador/denominador);
             }
 
@@ -37,6 +45,19 @@ public class InterpolacaoNewton {
     }
 
     public ResultadoInterpolacao montarPolinomio(double[] x, double[] y){
+        
+        if(x.length == 0 || x.length != y.length){
+            throw new ArgumentoInvalidoException("Os vetores x e y devem ter o mesmo tamanho e não podem estar vazios.");
+        }
+        for(int i = 0; i < x.length; i++){
+            for(int j = i + 1; j < x.length; j++){
+                if(x[i] == x[j]){
+                    throw new DivisaoPorZeroException("Existem valores de x repetidos na interpolação.");
+                }
+            }
+        }
+        
+        
         ordens.clear();
 
         No polinomio = null;
@@ -71,7 +92,7 @@ public class InterpolacaoNewton {
         return new ResultadoInterpolacao(polinomio, ordens);
     }
 
-    public List<List<Double>> getOrdens() {
+    public List<List<Double>> getOrdens(){
         return ordens;
     }
 }
