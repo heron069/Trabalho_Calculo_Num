@@ -5,12 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class MainApp extends Application {
+public class MainApp extends Application{
 
     private static StackPane rootContainer;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage){
         primaryStage.setTitle("Trabalho de Métodos Numéricos");
 
         rootContainer = new StackPane();
@@ -22,12 +22,12 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 
-    public static void mudarTela(javafx.scene.Node novaTela) {
+    public static void mudarTela(javafx.scene.Node novaTela){
         rootContainer.getChildren().clear();
         rootContainer.getChildren().add(novaTela);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         launch(args);
     }
 }

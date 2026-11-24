@@ -13,10 +13,10 @@ public class IntegracaoSimpson{
 
     public IntegracaoSimpson(Interpretador interpretador, double minIntervalo, double maxIntervalo, int n){
         if(n < 2 || (n%2) == 1){
-            throw new RuntimeException("N impar para Simpson");
+            throw new ArgumentoInvalidoException("O método de Simpson exige um número par de subintervalos maior ou igual a 2.");
         }
-        if(maxIntervalo < minIntervalo){
-            throw new RuntimeException("Intervalo Invalido");
+        if (maxIntervalo < minIntervalo) {
+            throw new ArgumentoInvalidoException("O limite máximo deve ser maior que o mínimo.");
         }
         this.interpretador = interpretador;
         this.minIntervalo = minIntervalo;

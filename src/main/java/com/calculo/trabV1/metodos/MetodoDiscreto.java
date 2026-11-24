@@ -2,9 +2,10 @@ package com.calculo.trabV1.metodos;
 import com.calculo.trabV1.excecoes.*;
 import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.resultados.ResultadoDiscreto;
+import com.calculo.trabV1.sistemasLineares.EliminacaoGauss.ResultadoGauss;
 import com.calculo.trabV1.sistemasLineares.EliminacaoGauss;
 
-public class MetodoDiscreto {
+public class MetodoDiscreto{
     private Interpretador interpretador;
     private EliminacaoGauss gauss = new EliminacaoGauss();
     private double[] x;
@@ -12,9 +13,14 @@ public class MetodoDiscreto {
     private int grau;
     
     public MetodoDiscreto(double[] x, double[] y, int grau){
-        if(x.length != y.length){
-            throw new RuntimeException("Valores de x[] e y[] Invalidos");
+        if(x == null || y == null){
+            throw new ArgumentoInvalidoException("Os vetores x e y não podem ser nulos.");
         }
+
+        if(x.length == 0 || x.length != y.length){
+            throw new ArgumentoInvalidoException("Os vetores x e y devem ter o mesmo tamanho e não podem estar vazios.");
+        }
+        
         this.x = x;
         this.y = y;
         this.grau = grau;
@@ -40,9 +46,9 @@ public class MetodoDiscreto {
         }
 
         double[] b = new double[tam];
-        for (int i = 0; i < tam; i++) {
+        for (int i = 0; i < tam; i++){
             double soma = 0.0;
-            for (int k = 0; k < x.length; k++) {
+            for (int k = 0; k < x.length; k++){
                 soma += y[k] * Math.pow(x[k], g[i]);
             }
             b[i] = soma;
@@ -66,15 +72,15 @@ public class MetodoDiscreto {
 
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < alpha.length; i++) {
+        for (int i = 0; i < alpha.length; i++){
             double c = alpha[i];
             String valorAbs = java.math.BigDecimal.valueOf(Math.abs(c)).toPlainString();
 
-            if (i > 0) {
+            if(i > 0){
                 sb.append(c >= 0 ? " + " : " - ");
                 sb.append(valorAbs).append("*x^").append(i);
-            } else {
-                if (c < 0) sb.append("-");
+            } else{
+                if(c < 0) sb.append("-");
                 sb.append(valorAbs).append("*x^").append(i);
             }
         }

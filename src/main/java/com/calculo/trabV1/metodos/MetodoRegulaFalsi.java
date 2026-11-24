@@ -7,7 +7,7 @@ import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.iteracao.RegulaFalsiIteracao;
 import com.calculo.trabV1.resultados.ResultadoMetodo;
 
-public class MetodoRegulaFalsi {
+public class MetodoRegulaFalsi{
     private Interpretador interpretador;
 
     public MetodoRegulaFalsi(Interpretador interpretador){
@@ -40,6 +40,10 @@ public class MetodoRegulaFalsi {
         
         double fa = interpretador.calcular(a);
         double fb = interpretador.calcular(b);
+
+        if(!Double.isFinite(fa) || !Double.isFinite(fb)){
+            throw new DivisaoPorZeroException("A funcao gerou um valor inválido dentro do intervalo.");
+        }
         
         if(Math.abs(fa) <= tolerancia){
             raiz = a;
@@ -49,20 +53,23 @@ public class MetodoRegulaFalsi {
             raiz = b;
             convergiu = true;
         }
-        if (fa * fb > 0) {
-            return new ResultadoMetodo<>(0, false, iteracoes);
+        if(!convergiu && (fa * fb) > 0){
+            throw new ArgumentoInvalidoException("O intervalo não possui mudança de sinal.");
         }
 
         while(!convergiu && num < maxIteracao){
             
-            if (Math.abs(fb - fa) < 1e-12) {
-                System.out.println("Divisão por zero Encontrada!!! Verifique Valores");
-                break;
+            if(Math.abs(fb - fa) < 1e-12){
+                throw new DivisaoPorZeroException("f(b) - f(a) é zero ou muito próximo de zero.");
             }
             
             num++;
             double x = (a*fb - b*fa)/(fb - fa);
             double fx = interpretador.calcular(x);
+            if(!Double.isFinite(x) || !Double.isFinite(fx)){
+                throw new DivisaoPorZeroException("O método da Regula Falsi gerou um valor inválido.");
+            }
+
             double erro = Math.abs(b-a);
             
             iteracoes.add(new RegulaFalsiIteracao(num, x, fx, erro));

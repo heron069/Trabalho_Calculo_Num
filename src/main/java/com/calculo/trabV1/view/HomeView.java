@@ -6,9 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class HomeView extends VBox {
+public class HomeView extends VBox{
 
-    public HomeView() {
+    public HomeView(){
         setAlignment(Pos.CENTER);
         setSpacing(20);
         setPadding(new Insets(20));
@@ -24,7 +24,7 @@ public class HomeView extends VBox {
         getChildren().addAll(lblTitulo, btnA, btnB, btnC, btnD);
     }
 
-    private Button criarBotaoTopico(String texto, String letra) {
+    private Button criarBotaoTopico(String texto, String letra){
         Button btn = new Button(texto);
         btn.setPrefWidth(450);
         btn.setPrefHeight(4550);

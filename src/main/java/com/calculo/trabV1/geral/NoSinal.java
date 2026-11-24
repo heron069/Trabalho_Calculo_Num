@@ -1,4 +1,5 @@
 package com.calculo.trabV1.geral;
+import com.calculo.trabV1.excecoes.*;
 
 public class NoSinal implements No{
     private String sinal;
@@ -29,11 +30,11 @@ public class NoSinal implements No{
         return new NoSinal(sinal,argumento.derivar());
     }
 
-    public String getSinal() {
+    public String getSinal(){
         return sinal;
     }
 
-    public No getArgumento() {
+    public No getArgumento(){
         return argumento;
     }
 

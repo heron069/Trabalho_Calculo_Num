@@ -6,16 +6,16 @@ public class Montador{
     private int pos = 0;
     private char charAtual;
 
-    private void avancar() {
-        if (pos < expressao.length()) {
+    private void avancar(){
+        if(pos < expressao.length()){
             charAtual = expressao.charAt(pos++);
-        } else {
+        } else{
             charAtual = '\0';
         }
     }
 
     public Montador(String expressao){
-        if (expressao == null || expressao.trim().isEmpty()) {
+        if(expressao == null || expressao.trim().isEmpty()){
             throw new ExpressaoInvalidaException("A expressão não pode ser nula ou vazia.");
         }
         this.expressao = formatarFuncao(expressao);
@@ -25,7 +25,7 @@ public class Montador{
     public No montar(){
         No no = montarAdSub();
 
-        if (charAtual != '\0') {
+        if(charAtual != '\0'){
             throw new ExpressaoInvalidaException("Expressao invalida. Caractere inesperado: " + charAtual);
         }
 
@@ -89,16 +89,16 @@ public class Montador{
         if(charAtual == '('){
             avancar();
             No no = montarDentro();
-            if (charAtual != ')'){
+            if(charAtual != ')'){
                 throw new ExpressaoInvalidaException("Expressao invalida. Caractere inesperado: " + charAtual);
             }
             avancar();
             return no;
         }
 
-        if (Character.isDigit(charAtual) || charAtual == '.' || charAtual == ',') {
+        if(Character.isDigit(charAtual) || charAtual == '.' || charAtual == ','){
             StringBuilder sb = new StringBuilder();
-            while (Character.isDigit(charAtual) || charAtual == '.' || charAtual == ',') {
+            while (Character.isDigit(charAtual) || charAtual == '.' || charAtual == ','){
                 sb.append(charAtual);
                 avancar();
             }
@@ -114,29 +114,29 @@ public class Montador{
         }
 
         
-        if (Character.isLetter(charAtual)) {
+        if(Character.isLetter(charAtual)){
             StringBuilder sb = new StringBuilder();
-            while (Character.isLetter(charAtual)) {
+            while (Character.isLetter(charAtual)){
                 sb.append(charAtual);
                 avancar();
             }
 
             String op = sb.toString();
 
-            if (op.equalsIgnoreCase("x")) {
+            if(op.equalsIgnoreCase("x")){
                 return new NoVariavel();
             }
-            if (op.equalsIgnoreCase("e")) {
+            if(op.equalsIgnoreCase("e")){
                 return new NoNumero(Math.E);
             }
-            if (op.equalsIgnoreCase("pi")) {
+            if(op.equalsIgnoreCase("pi")){
                 return new NoNumero(Math.PI);
             }
-            if (charAtual == '(') {
+            if(charAtual == '('){
                 avancar();
                 No argumento = montarDentro();
 
-                if (charAtual != ')') {
+                if(charAtual != ')'){
                     throw new ExpressaoInvalidaException("Expressao invalida. Caractere inesperado: " + charAtual);
                 }
                 avancar();
@@ -151,20 +151,20 @@ public class Montador{
     private String formatarFuncao(String funcao){
         StringBuilder formatada = new StringBuilder();
 
-        for (int i = 0; i < funcao.length(); i++) {
+        for (int i = 0; i < funcao.length(); i++){
             char atual = funcao.charAt(i);
 
-            if (Character.isWhitespace(atual)) {
+            if(Character.isWhitespace(atual)){
                 continue;
             }
 
-            if (formatada.length() > 0) {
+            if(formatada.length() > 0){
                 char anterior = formatada.charAt(formatada.length() - 1);
-                if ((Character.isDigit(anterior) || anterior == ')')
-                        && (Character.isLetter(atual) || atual == '(')) {
+                if((Character.isDigit(anterior) || anterior == ')')
+                        && (Character.isLetter(atual) || atual == '(')){
                     formatada.append('*');
                 }
-                else if (anterior == 'x' && atual == '(') {
+                else if(anterior == 'x' && atual == '('){
                     formatada.append('*');
                 }
             }

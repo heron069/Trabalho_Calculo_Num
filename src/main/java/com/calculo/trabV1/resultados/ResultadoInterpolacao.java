@@ -1,13 +1,15 @@
 package com.calculo.trabV1.resultados;
 
 import com.calculo.trabV1.geral.*;
+import com.calculo.trabV1.excecoes.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class ResultadoInterpolacao {
+
+public class ResultadoInterpolacao{
     private No arvore;
     private String polinomio;
     private List<List<Double>> ordens;
@@ -67,7 +69,7 @@ public class ResultadoInterpolacao {
         int a = grau(op.getEsquerda()); 
         int b = grau(op.getDireita());
 
-        switch (op.getOperador()) {
+        switch (op.getOperador()){
             case "+": 
                 return Math.max(a, b);
             case "-": 
@@ -78,27 +80,27 @@ public class ResultadoInterpolacao {
                 if(b == 0){
                     return a;
                 }
-                throw new RuntimeException("Divisão por polinômio não suportada");
+                throw new ExpressaoInvalidaException("Divisão por polinômio não suportada na simplificação.");
             case "^":
                 if(op.getDireita() instanceof NoNumero)
                     return a * (int) ((NoNumero) op.getDireita()).getValor();
         }
-        throw new RuntimeException("Expressão não suportada");
+        throw new ExpressaoInvalidaException("Expressão não suportada na simplificação.");
     }
 
-    private String simplificar(No arvore) {
+    private String simplificar(No arvore){
         int n = grau(arvore) + 1;
         double[] pontosFuncao = new double[n];
         double[] diff = new double[n];
         double[] c = new double[n];
-        double[] base = {1};
+        double[] base ={1};
 
-        for(int k = 0; k < n; k++) {
+        for(int k = 0; k < n; k++){
             pontosFuncao[k] = Math.cos((2 * k + 1) * Math.PI / (2 * n));
             diff[k] = arvore.interpretar(pontosFuncao[k]);
         }
 
-        for(int k = 0; k < n; k++) {
+        for(int k = 0; k < n; k++){
             for(int i = 0; i < base.length; i++){
                 c[i] += diff[0] * base[i];
             }

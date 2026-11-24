@@ -7,7 +7,7 @@ import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.iteracao.NewtonIteracao;
 import com.calculo.trabV1.resultados.ResultadoMetodo;
 
-public class MetodoNewton {
+public class MetodoNewton{
     private Interpretador interpretador;
 
     public MetodoNewton(Interpretador interpretador){
@@ -29,17 +29,24 @@ public class MetodoNewton {
         double raiz = x;
         boolean convergiu = Math.abs(fx) <= tolerancia;
         
-        while (!convergiu && num < it) {
+        while (!convergiu && num < it){
 
             double flinhax = interpretador.calcularDerivada(x);
 
-            if (Math.abs(flinhax) < 1e-12) {
-                System.out.println("Divisão por zero Encontrada!!! Verifique Valores");
-                break;
+            if(!Double.isFinite(flinhax)){
+                throw new DominioMatematicoException("A derivada retornou um valor inválido.");
+            }
+
+            if(Math.abs(flinhax) < 1e-12){
+                throw new DivisaoPorZeroException("A derivada é zero ou muito próxima de zero.");
             }
 
             double x1 = x - (fx / flinhax);
             double fx1 = interpretador.calcular(x1);
+            if(!Double.isFinite(x1) || !Double.isFinite(fx1)){
+                throw new DivisaoPorZeroException("O método da newton gerou um valor inválido.");
+            }
+
             double erro = Math.abs(x1 - x);
 
             num++;

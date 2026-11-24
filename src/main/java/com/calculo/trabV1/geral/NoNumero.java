@@ -18,9 +18,13 @@ public class NoNumero implements No{
         return new NoNumero(0);
     }
 
+    public double getValor(){
+        return valor;
+    }
+
     @Override 
-    public String toString() {
-        if (valor == (int) valor) {
+    public String toString(){
+        if(valor == (int) valor){
             return String.valueOf((int) valor);
         }
         return String.valueOf(valor);

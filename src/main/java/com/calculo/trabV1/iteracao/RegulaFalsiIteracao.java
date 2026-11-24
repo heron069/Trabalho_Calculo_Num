@@ -1,6 +1,6 @@
 package com.calculo.trabV1.iteracao;
 
-public class RegulaFalsiIteracao {
+public class RegulaFalsiIteracao{
     int num;
     double x;
     double fx;

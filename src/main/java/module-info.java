@@ -1,4 +1,4 @@
-module com.calculo.trabV1 {
+module com.calculo.trabV1{
     requires javafx.controls;
     requires javafx.fxml;
 
