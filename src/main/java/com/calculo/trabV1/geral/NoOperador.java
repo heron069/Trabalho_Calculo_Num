@@ -1,5 +1,5 @@
 package com.calculo.trabV1.geral;
-
+import com.calculo.trabV1.excecoes.*;
 
 public class NoOperador implements No{
     private String operador;
@@ -22,9 +22,24 @@ public class NoOperador implements No{
             case "+": return valorEsquerda + valorDireita;
             case "-": return valorEsquerda - valorDireita;
             case "*": return valorEsquerda * valorDireita;
-            case "/": return valorEsquerda / valorDireita;
-            case "^": return Math.pow(valorEsquerda, valorDireita);
-            default: throw new RuntimeException("Operador desconhecido: " + operador);
+            case "/":
+                if (valorDireita == 0.0) {
+                    throw new DivisaoPorZeroException();
+                }
+                return valorEsquerda / valorDireita;
+            case "^": 
+                double resultado = Math.pow(valorEsquerda, valorDireita);
+                if(Double.isNaN(resultado)){
+                    throw new DominioMatematicoException("Potência fora do domínio dos números reais.");
+                }
+
+                if(!Double.isFinite(resultado)){
+                    throw new DominioMatematicoException("O resultado da potência não é finito.");
+                }
+            return resultado;
+
+            default: 
+                throw new ExpressaoInvalidaException("Operador desconhecido: " + operador);
         }
     }
 
@@ -55,20 +70,55 @@ public class NoOperador implements No{
                                     new NoOperador("^",dir,new NoNumero(2)));
 
             case "^":
-                return new NoOperador("*",
-                                    new NoOperador("^", esq, dir),
-                                    new NoOperador("+",
-                                                new NoOperador("*",
-                                                            dir.derivar(),
-                                                            new NoFuncao("ln", esq)),
-                                    new NoOperador("*",
-                                                dir,
-                                                new NoOperador("/",
-                                                            esq.derivar(),
-                                                            esq))));
+                if(dir  instanceof NoNumero){
+                    return new NoOperador("*",
+                                        new NoOperador("*",
+                                                        dir,
+                                                        new NoOperador("^",
+                                                                        esq,
+                                                                        new NoOperador("-",
+                                                                                        dir,
+                                                                                        new NoNumero(1)))),
+                                        esq.derivar());
+                }
 
-            default: throw new RuntimeException("Operador desconhecido: " + operador);
+                if (esq instanceof NoNumero) {
+                    return new NoOperador("*",
+                        new NoOperador("^", esq, dir),
+                        new NoOperador("*",
+                            new NoFuncao("ln", esq),
+                            dir.derivar()
+                        )
+                    );
+                }
+
+                return new NoOperador("*",
+                                        new NoOperador("^", esq, dir),
+                                        new NoOperador("+",
+                                                    new NoOperador("*",
+                                                                dir.derivar(),
+                                                                new NoFuncao("ln", esq)),
+                                        new NoOperador("*",
+                                                    dir,
+                                                    new NoOperador("/",
+                                                                esq.derivar(),
+                                                                esq))));
+
+            default: 
+                throw new ExpressaoInvalidaException("Operador desconhecido: " + operador);
         }
+    }
+
+    public String getOperador() {
+        return operador;
+    }
+
+    public No getEsquerda() {
+        return esq;
+    }
+
+    public No getDireita() {
+        return dir;
     }
 
     @Override

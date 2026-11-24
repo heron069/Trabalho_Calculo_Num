@@ -1,6 +1,5 @@
 package com.calculo.trabV1.geral;
 
-
 public class NoSinal implements No{
     private String sinal;
     private No argumento;
@@ -21,13 +20,21 @@ public class NoSinal implements No{
             return valor;
         }
         else{
-            throw new RuntimeException("Sinal desconhecida: " + sinal);
+            throw new ExpressaoInvalidaException("Sinal desconhecido: " + sinal);
         }
     }
     
     @Override 
     public No derivar(){
         return new NoSinal(sinal,argumento.derivar());
+    }
+
+    public String getSinal() {
+        return sinal;
+    }
+
+    public No getArgumento() {
+        return argumento;
     }
 
     @Override

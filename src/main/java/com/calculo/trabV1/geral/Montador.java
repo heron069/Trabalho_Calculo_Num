@@ -1,4 +1,5 @@
 package com.calculo.trabV1.geral;
+import com.calculo.trabV1.excecoes.*;
 
 public class Montador{
     private String expressao;
@@ -14,6 +15,9 @@ public class Montador{
     }
 
     public Montador(String expressao){
+        if (expressao == null || expressao.trim().isEmpty()) {
+            throw new ExpressaoInvalidaException("A expressão não pode ser nula ou vazia.");
+        }
         this.expressao = formatarFuncao(expressao);
         avancar();
     }
@@ -22,7 +26,7 @@ public class Montador{
         No no = montarAdSub();
 
         if (charAtual != '\0') {
-            throw new RuntimeException("Caractere inesperado: " + charAtual);
+            throw new ExpressaoInvalidaException("Expressao invalida. Caractere inesperado: " + charAtual);
         }
 
         return no;
@@ -86,7 +90,7 @@ public class Montador{
             avancar();
             No no = montarDentro();
             if (charAtual != ')'){
-                throw new RuntimeException("Esperava ')'");
+                throw new ExpressaoInvalidaException("Expressao invalida. Caractere inesperado: " + charAtual);
             }
             avancar();
             return no;
@@ -99,8 +103,14 @@ public class Montador{
                 avancar();
             }
 
-            double valorFinal = Double.parseDouble(sb.toString().replace(',', '.'));
-            return new NoNumero(valorFinal);
+            double valorFinal;
+
+            try{
+                valorFinal = Double.parseDouble(sb.toString().replace(',', '.'));
+            }
+            catch(NumberFormatException e){
+                throw new ExpressaoInvalidaException("Número inválido na expressão: " + sb);
+            }
         }
 
         
@@ -127,15 +137,15 @@ public class Montador{
                 No argumento = montarDentro();
 
                 if (charAtual != ')') {
-                    throw new RuntimeException("Esperava ')'");
+                    throw new ExpressaoInvalidaException("Expressao invalida. Caractere inesperado: " + charAtual);
                 }
                 avancar();
 
                 return new NoFuncao(op, argumento);
             }
-            throw new RuntimeException("Operador inválido: " + op);
+            throw new FuncaoInvalidaException("Funcao ou constante desconhecida: " + op);
         }
-        throw new RuntimeException("Caractere não existe: " + charAtual);
+        throw new CharInvalidoException("Caractere invalido encontrado: " + charAtual);
     }
 
     private String formatarFuncao(String funcao){
@@ -150,12 +160,14 @@ public class Montador{
 
             if (formatada.length() > 0) {
                 char anterior = formatada.charAt(formatada.length() - 1);
-
-                if ((Character.isDigit(anterior) || anterior == ')') && (Character.isLetter(atual) || atual == '(')) {
+                if ((Character.isDigit(anterior) || anterior == ')')
+                        && (Character.isLetter(atual) || atual == '(')) {
+                    formatada.append('*');
+                }
+                else if (anterior == 'x' && atual == '(') {
                     formatada.append('*');
                 }
             }
-
             formatada.append(atual);
         }
         return formatada.toString();

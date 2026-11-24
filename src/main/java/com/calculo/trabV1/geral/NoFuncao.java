@@ -1,5 +1,5 @@
 package com.calculo.trabV1.geral;
-
+import com.calculo.trabV1.excecoes.*;
 
 public class NoFuncao implements No{
     private String funcao;
@@ -13,6 +13,9 @@ public class NoFuncao implements No{
     @Override
     public double interpretar(double x){
         double valor = argumento.interpretar(x);
+        if (!Double.isFinite(valor)) {
+            throw new DominioMatematicoException("O argumento da função não é um número finito.");
+        }
     
         switch(funcao){
             case "sin":
@@ -22,27 +25,48 @@ public class NoFuncao implements No{
                 return Math.cos(valor);
 
             case "tg":
+                if (Math.abs(Math.cos(valor)) < 1e-12) {
+                    throw new DominioMatematicoException("tg(x) indefinida nesse ponto!");
+                }
                 return Math.tan(valor);
 
             case "log":
+                if (valor <= 0) {
+                    throw new DominioMatematicoException("log(x) exige um argumento maior que zero!");
+                }
                 return Math.log10(valor);
         
             case "sqrt":
+                if (valor < 0) {
+                    throw new DominioMatematicoException("sqrt(x) exige um argumento maior ou igual a zero!");
+                }
                 return Math.sqrt(valor);
 
             case "ln":
+                 if (valor <= 0) {
+                    throw new DominioMatematicoException("ln(x) exige um argumento maior que zero!");
+                }
                 return Math.log(valor);
             case "sec":
+                if (Math.abs(Math.cos(valor)) < 1e-12) {
+                    throw new DominioMatematicoException("sec(x) indefinida nesse ponto!");
+                }
                 return 1.0/(Math.cos(valor));
 
             case "cossec":
+                if (Math.abs(Math.sin(valor)) < 1e-12) {
+                    throw new DominioMatematicoException("cossec(x) indefinida nesse ponto!");
+                }
                 return 1.0/(Math.sin(valor));
 
             case "cotg":
+                if (Math.abs(Math.sin(valor)) < 1e-12) {
+                    throw new DominioMatematicoException("cotg(x) indefinida nesse ponto!");
+                }
                 return Math.cos(valor)/(Math.sin(valor));
 
             default:
-                throw new RuntimeException("Função desconhecida: " + funcao);
+                throw new FuncaoInvalidaException("Função desconhecida: " + funcao);
         }
     }
 
@@ -115,9 +139,17 @@ public class NoFuncao implements No{
                                                                          new NoNumero(2))),
                                     argumento.derivar());
             default:
-                throw new RuntimeException("Função desconhecida: " + funcao);
+                throw new FuncaoInvalidaException("Funcao ou constante desconhecida: " + funcao);
         }
     }
+
+    public String getFuncao() {
+    return funcao;
+}
+
+public No getArgumento() {
+    return argumento;
+}
 
     @Override
     public String toString(){

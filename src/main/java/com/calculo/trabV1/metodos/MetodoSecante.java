@@ -2,7 +2,7 @@ package com.calculo.trabV1.metodos;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.calculo.trabV1.excecoes.*;
 import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.iteracao.SecanteIteracao;
 import com.calculo.trabV1.resultados.ResultadoMetodo;
@@ -16,6 +16,13 @@ public class MetodoSecante {
 
     public ResultadoMetodo<SecanteIteracao> calcularRaiz(double x0, double x1, double tolerancia, int it){
         List<SecanteIteracao> iteracoes = new ArrayList<>();
+        if(tolerancia <= 0 || !Double.isFinite(tolerancia)){
+            throw new ArgumentoInvalidoException("A tolerância deve ser positiva e finita.");
+        }
+        if(it <= 0){
+            throw new ArgumentoInvalidoException("O número máximo de iterações deve ser positivo.");
+        }
+
         double x = x0;
         double fx = interpretador.calcular(x);
         double fx1 = interpretador.calcular(x1);
