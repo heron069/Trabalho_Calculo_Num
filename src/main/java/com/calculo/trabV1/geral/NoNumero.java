@@ -18,6 +18,10 @@ public class NoNumero implements No{
         return new NoNumero(0);
     }
 
+    public double getValor(){
+        return valor;
+    }
+
     @Override 
     public String toString(){
         if(valor == (int) valor){

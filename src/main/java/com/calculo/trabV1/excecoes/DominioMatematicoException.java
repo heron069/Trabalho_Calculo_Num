@@ -1,4 +1,4 @@
-package excecoes;
+package com.calculo.trabV1.excecoes;
 
 public class DominioMatematicoException extends RuntimeException{
     public DominioMatematicoException(){

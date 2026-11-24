@@ -52,8 +52,8 @@ public class EliminacaoGauss{
                     }
                 }
 
-                if(origem[i] == null || origem[i].length != colunas){
-                    throw new ArgumentoInvalidoException("A linha " + (i + 1) + " deve possuir exatamente " + colunas + " colunas.");
+                if (linhaTroca == -1) {
+                    throw new DivisaoPorZeroException("Pivô nulo na coluna " + (k + 1) + ". Não foi encontrado elemento não nulo abaixo.");
                 }
 
                 double[] temp = m[k];
@@ -115,9 +115,6 @@ public class EliminacaoGauss{
     private double[][] copiarMatriz(double[][] origem, int linhas, int colunas){
         double[][] copia = new double[linhas][colunas];
         for (int i = 0; i < linhas; i++){
-            if(origem[i] == null || origem[i].length != colunas){
-                throw new ArgumentoInvalidoException("A linha " + (i + 1) + " deve possuir exatamente " + colunas + " colunas.");
-            }
             System.arraycopy(origem[i], 0, copia[i], 0, colunas);
         }
         return copia;

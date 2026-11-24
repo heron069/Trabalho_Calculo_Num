@@ -2,6 +2,7 @@ package com.calculo.trabV1.metodos;
 import com.calculo.trabV1.excecoes.*;
 import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.resultados.ResultadoDiscreto;
+import com.calculo.trabV1.sistemasLineares.EliminacaoGauss.ResultadoGauss;
 import com.calculo.trabV1.sistemasLineares.EliminacaoGauss;
 
 public class MetodoDiscreto{
