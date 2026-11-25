@@ -1,4 +1,5 @@
-package com.calculo.trabV1.metodos;
+package com.calculo.trabV1.integracaoNumerica;
+
 import com.calculo.trabV1.excecoes.*;
 import com.calculo.trabV1.geral.*;
 import com.calculo.trabV1.resultados.ResultadoIntegracao;

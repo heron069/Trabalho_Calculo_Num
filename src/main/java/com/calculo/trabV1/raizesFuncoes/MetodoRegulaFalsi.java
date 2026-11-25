@@ -1,4 +1,5 @@
-package com.calculo.trabV1.metodos;
+package com.calculo.trabV1.raizesFuncoes;
+
 
 import java.util.ArrayList;
 import java.util.List;
