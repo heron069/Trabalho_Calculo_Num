@@ -49,7 +49,7 @@ public class MetodoInterfaceView extends VBox {
         boolean ehLagrange = nomeMetodo != null &&
                 (nomeMetodo.startsWith("C.1") || nomeLower.contains("lagrange"));
         boolean ehInterpNewton = nomeMetodo != null &&
-                (nomeMetodo.startsWith("C.2") || (nomeLower.contains("newton") && (nomeLower.contains("interpol") || nomeMetodo.startsWith("2."))));
+                (nomeMetodo.startsWith("C.2") || (nomeLower.contains("newton") && nomeLower.contains("interpol")));
 
         boolean ehBisseccao = !ehInterpNewton && nomeMetodo != null &&
                 (nomeMetodo.startsWith("A.1") || nomeLower.contains("bissec"));
@@ -282,7 +282,19 @@ public class MetodoInterfaceView extends VBox {
 
         Button btnVoltar = new Button("← Voltar aos Subtópicos");
         btnVoltar.setOnAction(e -> {
-            String letra = nomeMetodo != null && !nomeMetodo.isEmpty() ? nomeMetodo.substring(0, 1) : "A";
+            String letra = "A";
+            if (nomeMetodo != null) {
+                String upper = nomeMetodo.trim().toUpperCase();
+                if (upper.startsWith("A") || upper.startsWith("A.") || ehBisseccao || ehNewton || ehSecante || ehRegulaFalsi) {
+                    letra = "A";
+                } else if (upper.startsWith("B") || upper.startsWith("B.") || ehGauss || ehLU || ehGaussSeidel) {
+                    letra = "B";
+                } else if (upper.startsWith("C") || upper.startsWith("C.") || ehLagrange || ehInterpNewton) {
+                    letra = "C";
+                } else if (upper.startsWith("D") || upper.startsWith("D.") || ehTrapezio || ehSimpson || ehCasoDiscreto) {
+                    letra = "D";
+                }
+            }
             MainApp.mudarTela(new SubtopicosView(letra));
         });
 
