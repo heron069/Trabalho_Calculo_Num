@@ -23,7 +23,7 @@ public class Montador{
     }
 
     public No montar(){
-        No no = montarAdSub();
+        No no = montarExpressao();
 
         if(charAtual != '\0'){
             throw new ExpressaoInvalidaException("Expressao invalida. Caractere inesperado: " + charAtual);
@@ -33,12 +33,29 @@ public class Montador{
     }
 
     private No montarDentro(){
+        return montarExpressao();
+    }
+
+    private No montarExpressao(){
+        if(charAtual == '+'){
+            avancar();
+            No primeiroTermo = montarMulDiv();
+            return continuarAdSub(new NoSinal("+", primeiroTermo));
+        }
+        if(charAtual == '-'){
+            avancar();
+            No primeiroTermo = montarMulDiv();
+            return continuarAdSub(new NoSinal("-", primeiroTermo));
+        }
         return montarAdSub();
     }
 
     private No montarAdSub(){
         No no = montarMulDiv();
+        return continuarAdSub(no);
+    }
 
+    private No continuarAdSub(No no){
         while(charAtual == '+' || charAtual == '-'){
             char operador = charAtual;
             avancar();
@@ -49,27 +66,15 @@ public class Montador{
     }
 
     private No montarMulDiv(){
-        No no = montarSinal();
+        No no = montarExpo();
 
         while(charAtual == '*' || charAtual == '/'){
             char operador = charAtual;
             avancar();
-            No valorDireita = montarSinal();
+            No valorDireita = montarExpo();
             no = new NoOperador(String.valueOf(operador), no, valorDireita);
         }
         return no;
-    }
-
-    private No montarSinal(){ 
-        if(charAtual == '+'){
-            avancar();
-            return new NoSinal("+", montarSinal());
-        }
-        if(charAtual == '-'){
-            avancar();
-            return new NoSinal("-", montarSinal());
-        }
-        return montarExpo();
     }
 
     private No montarExpo(){
@@ -78,14 +83,13 @@ public class Montador{
         while(charAtual == '^'){
             char operador = charAtual;
             avancar();
-            No valorDireita = montarSinal();
+            No valorDireita = montarTermo();
             no = new NoOperador(String.valueOf(operador), no, valorDireita);
         }
         return no;
     }
 
     private No montarTermo(){
-        
         if(charAtual == '('){
             avancar();
             No no = montarDentro();
